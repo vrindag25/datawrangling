@@ -1,4 +1,22 @@
-def missing_values(data):
+# 1.Replacing dashes and NAs
+for col in objcols:
+    data[col] = data[col].replace('-', 0)
+#     data[col] = data[col].replace('NA', 0)
+
+#2. Remove comma from numeric
+for col in sales_cols:
+    data[col] = data[col].str.replace(',',"").astype(float)
+    
+#3. Replacing percentage suffix
+for col in objcols:
+    data[col] = (pd.to_numeric(data[col].str[:-1]).div(100).mask(data[col] == '%', 0))
+    
+#4. Replacing Nans with zeros
+for col in objcols:
+    data[col] = data[col].replace(np.nan, 0)
+    
+#5. Missing Values 
+    def missing_values(data):
     
     # getting the sum of null values and ordering
     total = data.isnull().sum().sort_values(ascending = False) 
@@ -15,6 +33,7 @@ def missing_values(data):
     
     return df
 
+#6. Get columns with specific string
 def get_cols(string_list, data):
     cols_all = []
     for string in string_list:
@@ -23,6 +42,7 @@ def get_cols(string_list, data):
         cols_all.extend(cols)
     return(cols)
 
+#7. Categorise Data
 def create_groups(row):
     if row in [0,1,2,3,4]:
         return "Low"
@@ -32,10 +52,12 @@ def create_groups(row):
         return "High"
     else:
         return "others"
-
+    
+#8. Create empty Dataset
 def df_empty(columns, dtypes, index=None):
     assert len(columns)==len(dtypes)
     df = pd.DataFrame(index=index)
     for c,d in zip(columns, dtypes):
         df[c] = pd.Series(dtype=d)
     return df
+
