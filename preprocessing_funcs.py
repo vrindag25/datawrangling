@@ -16,7 +16,7 @@ for col in objcols:
     data[col] = data[col].replace(np.nan, 0)
     
 #5. Missing Values 
-    def missing_values(data):
+def missing_values(data):
     
     # getting the sum of null values and ordering
     total = data.isnull().sum().sort_values(ascending = False) 
@@ -61,3 +61,8 @@ def df_empty(columns, dtypes, index=None):
         df[c] = pd.Series(dtype=d)
     return df
 
+#9. 
+def create_dummies(data, cat_col,prefix_name ):
+    X = pd.get_dummies(df[cat_col], prefix_name)
+    X = X.apply(lambda x:x.astype(np.int64))
+    return(X)
