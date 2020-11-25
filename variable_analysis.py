@@ -9,7 +9,7 @@ xvar_rm.extend([col for col in df.columns if(('unknown' in col) or ('others' in 
 df=df.drop(xvar_rm,axis=1)
 
 ## Step 1:
-Remove accounts if mBC patients covered is less than 5 or account coverage < 20% 
+Remove rows based on condition
 
 ## Step 2:
 Remove variables based on the proportion of data available
